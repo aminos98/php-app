@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  php-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql-db
+
+  mysql-db:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: swiss_collection
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./admin_panel/DB/swiss_collection.sql:/docker-entrypoint-initdb.d/swiss_collection.sql
